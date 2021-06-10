@@ -1,40 +1,298 @@
-<h1>Backend Analyst Candidate Testing</h1>
+# Backend Analyst Candidate Testing
 
-Hello dear developer, in this test we will analyze your general knowledge and even speed of development. Below we will explain everything that will be needed.
-Do not be alarmed, we do not expect everyone to be able to complete all tasks, this test is the same presented for candidates of all experience levels, so do what you can without worry.
+Project developed for a [challenge of Anota Ai](https://github.com/anotaaidev/test-backend-nodejs).
 
-<strong>The challenge</strong>
+## Get started
+---
+before you start, you will need to install the following tools:
+- [Node.js](https://nodejs.org/en/)
+- [Git](https://git-scm.com/)
+- [VSCode](https://code.visualstudio.com/)
+- [MongoDB](https://www.mongodb.com/)
 
-Your challenge is to develop an API, using Node.JS, for a product catalog management application. Thus, you must analyze and convert the user stories below into routes of an application.
- 
-<strong>User stories:</strong>
+### First steps:
+---
+Clone the repository and install the packages
 
-- As a user I would like to register a product so that I can have access to the data of this product in the future (Title, description, price, category)
-- I as a user would like to be able to associate and edit a product category;
-- As a user I would like to be able to access the list of all products;
-- As a user I would like to be able to filter products by name or category;
-- I as a user would like to be able to update the product data;
-- I as a user would like to be able to delete a product from my catalog;
- 
-<strong>Instructions</strong>
-- <strong>To start the test, <strong>fork</strong> this repository, create a branch with its full name and then and send us the link to the test performed (link to your repository) . If you just clone the repository you will not be able to push and then it will be more complicated to make the pull request.</strong>
-- The choice of libraries, databases, architecture, etc. is at your discretion.
-- Change the README file explaining what it takes to run your application.
-- Paste the branch name into the GUPY system and indicate the completion of the test
-- If you want you can leave us feedback regarding the test
+```shell
 
- 
-<strong>Our analysis</strong>
-- Knowledge of Javascript, NodeJs, Express will be assessed for this position;
-- We'll look at how you structure the:
-  application layers;
-  outgoing calls,
-  environment variables,
-   cache,
-  unit tests,
-  logs;
-  error handling;
-  documentation.
-- Code organization, module separation, readability and comments.
-- Commit history.
-- The use of MongoDB is a differentiator
+# clone this repository
+git clone https://github.com/sergiolmendonca/test-backend-nodejs.git
+
+# change to repository directory
+cd test-backend-nodejs
+
+# install the dependencies
+npm install
+
+# run the application
+npm run start
+
+```
+
+### project structure:
+---
+Structure of the project folders and files
+```
+
+__config files
+__Postman Collection
+  __AnotaAi-API Test.postman_collection.json
+__src
+  __controllers
+    __CategoryController.js
+    __ProductController.js
+
+  __database
+    __config.js
+
+  __models
+    __Category.js
+    __Product.js
+
+  __routes.js
+  __server.js
+
+```
+## API Endpoints
+---
+there is a Postman's colletion in the project to make tests easier.
+### Get Categories
+It lists all categories in the database
+```
+[GET] /category
+```
+Response examples:
+- Status 200
+```json
+{
+    "categories": [
+        {
+            "_id": "60c16c0b446f3831741eff78",
+            "name": "eletronics",
+            "__v": 0
+        },
+        {
+            "_id": "60c1868085630b0c2ce972e7",
+            "name": "food",
+            "__v": 0
+        }
+    ],
+    "total": 2
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Create Category
+It creates a new category
+```
+[POST] /category
+```
+Response examples:
+- Status 201
+```json
+{
+    "_id": "60c196652a714c2f30fab42f",
+    "name": "shoes",
+    "__v": 0
+}
+```
+- Status 400
+```json
+{
+    "message": "name is mandatory!"
+}
+```
+- Status 409
+```json
+{
+    "message": "The Category eletronics already exists."
+}
+```
+
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Get Products
+It lists all products in the database
+```
+[GET] /products
+```
+Response examples:
+- Status 200
+```json
+{
+    "products": [
+        {
+            "_id": "60c186b685630b0c2ce972e8",
+            "title": "PC",
+            "description": "Personal Computer",
+            "price": 1000.35,
+            "category": {
+                "_id": "60c16c0b446f3831741eff78",
+                "name": "eletronics",
+                "__v": 0
+            },
+            "__v": 0
+        }
+    ],
+    "total": 1
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Create Product
+It create a new product
+```
+[POST] /product
+```
+Response examples:
+- Status 201
+```json
+{
+    "_id": "60c1982a2a714c2f30fab430",
+    "title": "PC",
+    "description": "Personal Computer",
+    "price": 4500.99,
+    "category": "60c16c0b446f3831741eff78",
+    "__v": 0
+}
+```
+- Status 400
+```json
+{
+    "message": "Title is mandatory!"
+}
+```
+- Status 404
+```json
+{
+    "message": "Category no-category not found."
+}
+```
+- Status 409
+```json
+{
+    "message": "Product PC already exists."
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Update product
+It updates an existing 
+```
+[PUT] /product/:id
+```
+Response examples:
+- Status 200
+```json
+{
+    "message": "Product up to date."
+}
+```
+- Status 404
+```json
+{
+    "message": "Product not found."
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Delete product
+It deletes a product
+```
+[DELETE] /product/:id
+```
+Response examples:
+- Status 200
+```json
+{
+    "message": "Product deleted."
+}
+```
+- Status 404
+```json
+{
+    "message": "Product not found."
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+### Filter products
+It filter the products by name or category
+```
+[GET] /product?category=eletronics
+[GET] /product?name=PC
+```
+Response examples:
+- Status 200
+```json
+[
+    {
+        "_id": "60c186b685630b0c2ce972e8",
+        "title": "PC",
+        "description": "Personal Computer",
+        "price": 1000.35,
+        "category": {
+            "_id": "60c16c0b446f3831741eff78",
+            "name": "eletronics",
+            "__v": 0
+        },
+        "__v": 0
+    },
+    {
+        "_id": "60c198f02a714c2f30fab431",
+        "title": "PC",
+        "description": "Personal Computer",
+        "price": 4500.99,
+        "category": {
+            "_id": "60c16c0b446f3831741eff78",
+            "name": "eletronics",
+            "__v": 0
+        },
+        "__v": 0
+    }
+]
+```
+- Status 404
+```json
+{
+    "message": "Category not found."
+}
+```
+- Status 500
+```json
+{
+  "message": "Internal error."
+}
+```
+## Tecnologies
+---
+- Node.js
+- VSCode
+- MongoDB
+- Express
+
