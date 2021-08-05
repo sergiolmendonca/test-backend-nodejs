@@ -1,8 +1,8 @@
 
 const express = require("express");
 const routes = express.Router();
-const CategoryController = require('./controllers/CategoryController');
-const ProductController = require('./controllers/ProductController');
+const CategoryController = require('../routes/noauth/controllers/categoryController');
+const ProductController = require('../routes/noauth/controllers/productController');
 
 //CATEGORY
 routes.get('/category', CategoryController.index);
