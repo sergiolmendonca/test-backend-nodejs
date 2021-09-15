@@ -27,6 +27,21 @@ module.exports = productService = {
                 })
         })
     },
+    updateProduct: (product, id) => {
+        return new Promise((resolve, reject) => {
+            const newProduct = productModel
+                .findByIdAndUpdate(id, { 
+                    ...product
+                })
+            newProduct
+                .then((resProduct) => {
+                    resolve(resProduct)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    },
     deleteProduct: (id) => {
         return new Promise((resolve, reject) => {
             const deletedProduct = productModel

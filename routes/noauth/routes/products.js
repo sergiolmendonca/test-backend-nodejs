@@ -6,6 +6,7 @@ const productController = require('../controllers/productController')
 //PRODUCT
 routes.post('/', productController.validation, productController.store)
 routes.get('/list', productController.index)
+routes.put('/:id', productController.update)
 routes.delete('/:id', productController.delete)
 
 module.exports = routes;
